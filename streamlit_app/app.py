@@ -70,7 +70,6 @@ reddit = praw.Reddit(
 )
 
 # Define criteria
-brand_name = "Apple"
 min_score = 50
 min_comments = 20
 days_limit = 14
@@ -84,7 +83,7 @@ for brand in selected_brands:
     for subreddit_name in subreddits:
         subreddit = reddit.subreddit(subreddit_name)
 
-        for post in subreddit.search(brand, limit=100):
+        for post in subreddit.search(brand, limit=200):
             if (post.score >= min_score and
                 post.num_comments >= min_comments and
                 post.created_utc >= timestamp_limit):
