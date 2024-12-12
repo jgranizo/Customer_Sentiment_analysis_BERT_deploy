@@ -7,17 +7,38 @@ import pandas as pd
 import matplotlib.pyplot as plt
 # Count the occurrences of each sentiment
 from collections import Counter
-import json
-
+import os
 
 
 # Path to your JSON file
-file_path = "brand_data_with_sentiment_2024-12-12.json" 
+file_name= "brand_data_with_sentiment_2024-12-12.json" 
 
 # Open and load the JSON data
 
-with open(file_path, 'r') as file:
-    reddit_data = json.load(file)
+
+current_dir = os.path.dirname(os.path.abspath(__file__))
+
+# Specify the name of your data file
+
+# Construct the full file path
+file_path = os.path.join(current_dir, file_name)
+
+# Debugging: Display the current directory and list of files
+
+
+
+# Attempt to open and read the JSON file
+try:
+    with open(file_path, 'r') as file:
+        reddit_data = json.load(file)
+ # Display the JSON data in a formatted way
+except FileNotFoundError:
+    st.error(f"File not found: `{file_name}`. Please ensure it is in the same directory as `app.py`.")
+except json.JSONDecodeError:
+    st.error(f"Error decoding JSON in `{file_name}`. Please check the file's format.")
+except Exception as e:
+    st.error(f"An unexpected error occurred: {e}") # Input file with today's date
+
 st.markdown("""
     <style>
     .title-text {

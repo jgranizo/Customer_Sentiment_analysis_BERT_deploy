@@ -4,14 +4,37 @@ from datetime import datetime
 import streamlit as st
 import pandas as pd
 import json
-
-file_path = "brand_data_with_sentiment_2024-12-12.json" 
+import os
+file_name = "brand_data_with_sentiment_2024-12-12.json" 
 
 # Open and load the JSON data
 
-with open(file_path, 'r') as file:
-    reddit_data = json.load(file)
-input_file_key = "brand_data_with_sentiment_2024-12-12.json"  # Input file with today's date
+
+current_dir = os.path.dirname(os.path.abspath(__file__))
+
+# Step 2: Navigate to the parent directory (streamlit/) where text.json resides
+parent_dir = os.path.abspath(os.path.join(current_dir, os.pardir))
+
+# Step 3: Construct the full path to text.json
+file_path = os.path.join(parent_dir, file_name)
+
+
+try:
+    files_in_dir = os.listdir(current_dir)
+except Exception as e:
+    st.error(f"Error accessing directory: {e}")
+
+# Attempt to open and read the JSON file
+try:
+    with open(file_path, 'r') as file:
+        reddit_data = json.load(file)
+  # Display the JSON data in a formatted way
+except FileNotFoundError:
+    st.error(f"File not found: `{file_name}`. Please ensure it is in the same directory as `app.py`.")
+except json.JSONDecodeError:
+    st.error(f"Error decoding JSON in `{file_name}`. Please check the file's format.")
+except Exception as e:
+    st.error(f"An unexpected error occurred: {e}") # Input file with today's date
 
 st.markdown("""
     <style>
