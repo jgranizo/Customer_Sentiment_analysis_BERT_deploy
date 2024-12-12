@@ -2,3 +2,5 @@ checkpoint.pth
 .dvc
 venv
 AWS3
+AWS_deployment
+aws
